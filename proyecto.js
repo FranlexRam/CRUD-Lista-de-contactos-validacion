@@ -1,6 +1,7 @@
 const formulario = document.getElementById('formulario');
 const inputs = document.querySelectorAll('#formulario input');
 
+//Expresiones regulares
 const expresiones = {
     nombre: /^[a-zA-ZÀ-Ý\s]{3,40}$/, //Letras y espacios, pueden llevar acentos.
     apellido: /^[a-zA-ZÀ-Ý\s]{3,40}$/, //Letras y espacios, pueden llevar acentos.
@@ -13,7 +14,6 @@ const validarFormulario = (e) => {
     switch (e.target.name) {
         
         case 'nombre':
-            console.log('Hola');
             validarCampo(expresiones.nombre, e.target, 'nombre');
             
             break;
@@ -54,7 +54,7 @@ const validarCampo = (expresion, input, campo) => {
 
 inputs.forEach((input) => {
     input.addEventListener('keyup', validarFormulario); //Ocurre un evento al presionar una tecla dentro del input ("tecla levantada").
-    input.addEventListener('blur', validarFormulario); //Ocurre un evento al presionar fuera del input.
+    //input.addEventListener('blur', validarFormulario); //Ocurre un evento al presionar fuera del input.
 
 });
 
@@ -77,7 +77,8 @@ function showAlert(message, className){
 function clearFields() {
     document.querySelector('#nombre').value = '';
     document.querySelector('#apellido').value = '';
-    document.querySelector('#telefono').value = '';    
+    document.querySelector('#telefono').value = '';
+        
 }
 
 
@@ -92,11 +93,12 @@ document.querySelector('#formulario').addEventListener('submit', (e) => {
 
     //Validar
     if (nombre == '' || apellido == '' || telefono == '') {
-        showAlert('Por favor llena todos los campos.', 'danger');        
+        showAlert('Por favor llena todos los campos correctamente.', 'danger');        
     } else {
         if (selectedRow == null) {
             const list = document.querySelector('#contact-list');
             const row = document.createElement('tr');
+            formulario.reset();
 
             row.innerHTML = `
             <td>${nombre}</td>
@@ -119,6 +121,7 @@ document.querySelector('#formulario').addEventListener('submit', (e) => {
         }
 
         clearFields();
+    
 
 
     }
@@ -140,7 +143,6 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
 document.querySelector('#contact-list').addEventListener('click', (e) =>{
     target = e.target;
 
-    alert('Esta a punto de eliminar el contacto.')
     if (target.classList.contains('delete')) {
         target.parentElement.parentElement.remove();
         showAlert('Contacto borrado.', 'danger');        
