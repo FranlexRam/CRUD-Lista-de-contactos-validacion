@@ -7,23 +7,19 @@ body {
 }
 
 .container {
-    max-width: 100%;
-    width: 90%;
     margin: auto;
-    padding: 40px;
 }
 
 .formulario {
     display: flex;
-    flex-direction: column;
+    
     justify-content: center;
-    gap: 20px;
+    
 }
 
 .formulario__label {
     display: block; /*Para que ocupe el 100% de la pag*/
     font-weight: 700; /*fuente en negritas*/
-    padding: 10px;
     cursor: pointer;
   }
 
@@ -36,8 +32,8 @@ body {
     background: #fff;
     border: 3px solid transparent;
     border-radius: 4px;
-    height: 45px;
-    line-height: 45px;
+    height: 34px;
+    line-height: 34px;
     padding: 0 40px 0 10px;
     transition: .4s ease all;
   }
@@ -49,7 +45,7 @@ body {
   }
 
   .formulario__input-error {
-    font-size: 12px;
+    font-size: 15px;
     margin-bottom: 0;/*Al ser un parrafo, se agrega un margen por defecto que es mejor quitar*/
     display: none;
   }
@@ -61,7 +57,7 @@ body {
   .formulario__validacion-estado {
     position: absolute;
     right: 10px;
-    bottom: 16px;
+    bottom: 9px;
     z-index: 100;
     font-size: 16px;
     opacity: 0;

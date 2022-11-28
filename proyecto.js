@@ -1,5 +1,6 @@
 const formulario = document.getElementById('formulario');
 const inputs = document.querySelectorAll('#formulario input');
+const tbody = document.getElementById('contact-list');
 
 //Expresiones regulares
 const expresiones = {
@@ -26,7 +27,7 @@ const validarFormulario = (e) => {
             break;
 
         case 'apellido':
-            validarCampo(expresiones.nombre, e.target, 'apellido');
+            validarCampo(expresiones.apellido, e.target, 'apellido');
 
             break;
 
@@ -138,12 +139,16 @@ document.querySelector('#formulario').addEventListener('submit', (e) => {
             list.appendChild(row);
             selectedRow = null;
             showAlert('Nuevo contacto agregado.', "success");
+
+            localStorage.setItem('lista', tbody.innerHTML);
+
         } else {
             selectedRow.children[0].textContent = nombre;
             selectedRow.children[1].textContent = apellido;
             selectedRow.children[2].textContent = telefono;
             selectedRow = null;
             showAlert('Informacion de contacto actualizada.', 'info');
+            localStorage.setItem('lista', tbody.innerHTML);
         }
 
         clearFields();
@@ -162,6 +167,14 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
         document.querySelector('#nombre').value = selectedRow.children[0].textContent;
         document.querySelector('#apellido').value = selectedRow.children[1].textContent;
         document.querySelector('#telefono').value = selectedRow.children[2].textContent;
+        
+        inputs.forEach((input) => {
+            input.addEventListener('keyup', validarFormulario); //Ocurre un evento al presionar una tecla dentro del input ("tecla levantada").
+            input.addEventListener('blur', validarFormulario); //Ocurre un evento al presionar fuera del input.
+        
+        }); 
+
+
     }
 })
 
@@ -172,10 +185,13 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
     if (target.classList.contains('delete')) {
         target.parentElement.parentElement.remove();
         showAlert('Contacto borrado.', 'danger');
+        localStorage.setItem('lista', tbody.innerHTML);
     }
 });
 
 
-//Usando localStorage para almacenar datos:
+//Almacenar datos:
 
-localStorage.setItem('list', JSON.stringify()); 
+(() => {
+    tbody.innerHTML = localStorage.getItem('lista');
+ })()
