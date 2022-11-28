@@ -9,59 +9,69 @@ const expresiones = {
 }
 
 
+const campos = {
+    nombre: false,
+    apellido: false,
+    telefono: false  //NO se coloca coma (,) al ultimo elemento del objecto.
+}
+
+
 const validarFormulario = (e) => {
-    
+
     switch (e.target.name) {
-        
+
         case 'nombre':
             validarCampo(expresiones.nombre, e.target, 'nombre');
-            
+
             break;
 
         case 'apellido':
             validarCampo(expresiones.nombre, e.target, 'apellido');
-            
+
             break;
 
         case 'telefono':
             validarCampo(expresiones.telefono, e.target, 'telefono');
-            
+
             break;
-        
+
     }
-    
+
 }
 
 const validarCampo = (expresion, input, campo) => {
-    if(expresion.test(input.value)){
+    if (expresion.test(input.value)) {
         document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
         document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
         document.querySelector(`#grupo__${campo} i`).classList.add('fa-circle-check');
         document.querySelector(`#grupo__${campo} i`).classList.remove('fa-circle-xmark');
         document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.remove('formulario__input-error-activo');
-        campos [campo] = true;
-        
+        campos[campo] = true;
+
     } else {
         document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-incorrecto');
         document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-correcto');
         document.querySelector(`#grupo__${campo} i`).classList.add('fa-circle-xmark');
         document.querySelector(`#grupo__${campo} i`).classList.remove('fa-circle-check');
         document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.add('formulario__input-error-activo');
-        campos [campo] = false;
+        campos[campo] = false;
     }
 }
 
 
 inputs.forEach((input) => {
     input.addEventListener('keyup', validarFormulario); //Ocurre un evento al presionar una tecla dentro del input ("tecla levantada").
-    //input.addEventListener('blur', validarFormulario); //Ocurre un evento al presionar fuera del input.
+    input.addEventListener('blur', validarFormulario); //Ocurre un evento al presionar fuera del input.
 
 });
 
 
+
+
+
 var selectedRow = null;
 //Mostrar alertas.
-function showAlert(message, className){
+function showAlert(message, className) {
     const div = document.createElement('div');
     div.className = `alert alert-${className}`;
 
@@ -78,7 +88,13 @@ function clearFields() {
     document.querySelector('#nombre').value = '';
     document.querySelector('#apellido').value = '';
     document.querySelector('#telefono').value = '';
-        
+    document.querySelectorAll('.formulario__grupo-correcto').forEach((icono) => {
+        icono.classList.remove('formulario__grupo-correcto');
+    });
+    document.querySelectorAll('.formulario__grupo-incorrecto').forEach((icono) => {
+        icono.classList.remove('formulario__grupo-incorrecto');
+    });
+
 }
 
 
@@ -91,14 +107,24 @@ document.querySelector('#formulario').addEventListener('submit', (e) => {
     const apellido = document.querySelector('#apellido').value;
     const telefono = document.querySelector('#telefono').value;
 
+
     //Validar
-    if (nombre == '' || apellido == '' || telefono == '') {
-        showAlert('Por favor llena todos los campos correctamente.', 'danger');        
+    if (nombre == '' || apellido == '' || telefono == '' || !campos.nombre || !campos.apellido || !campos.telefono) {
+        showAlert('Por favor llena todos los campos correctamente.', 'danger');
     } else {
+
+
         if (selectedRow == null) {
+            formulario.reset();
+
+            document.querySelectorAll('.formulario__grupo-correcto').forEach((icono) => {
+                icono.classList.remove('formulario__grupo-correcto');
+            });
+
+
             const list = document.querySelector('#contact-list');
             const row = document.createElement('tr');
-            formulario.reset();
+
 
             row.innerHTML = `
             <td>${nombre}</td>
@@ -111,7 +137,7 @@ document.querySelector('#formulario').addEventListener('submit', (e) => {
             `;
             list.appendChild(row);
             selectedRow = null;
-            showAlert('Nuevo contacto agregado.', "success");            
+            showAlert('Nuevo contacto agregado.', "success");
         } else {
             selectedRow.children[0].textContent = nombre;
             selectedRow.children[1].textContent = apellido;
@@ -121,7 +147,7 @@ document.querySelector('#formulario').addEventListener('submit', (e) => {
         }
 
         clearFields();
-    
+
 
 
     }
@@ -131,7 +157,7 @@ document.querySelector('#formulario').addEventListener('submit', (e) => {
 //Editar datos
 document.querySelector('#contact-list').addEventListener('click', (e) => {
     target = e.target;
-    if(target.classList.contains('edit')){
+    if (target.classList.contains('edit')) {
         selectedRow = target.parentElement.parentElement;
         document.querySelector('#nombre').value = selectedRow.children[0].textContent;
         document.querySelector('#apellido').value = selectedRow.children[1].textContent;
@@ -140,11 +166,16 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
 })
 
 //Delete data
-document.querySelector('#contact-list').addEventListener('click', (e) =>{
+document.querySelector('#contact-list').addEventListener('click', (e) => {
     target = e.target;
 
     if (target.classList.contains('delete')) {
         target.parentElement.parentElement.remove();
-        showAlert('Contacto borrado.', 'danger');        
+        showAlert('Contacto borrado.', 'danger');
     }
 });
+
+
+//Usando localStorage para almacenar datos:
+
+localStorage.setItem('list', JSON.stringify()); 
