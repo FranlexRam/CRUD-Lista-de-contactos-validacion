@@ -1,8 +1,8 @@
 const formulario = document.getElementById('formulario');
 const inputs = document.querySelectorAll('#formulario input');
 const tbody = document.getElementById('contact-list');
-let contador = document.getElementById('cont'); 
-let numero = 0;
+const contador = document.getElementById('cont'); 
+let numero= 0;
 
 //Expresiones regulares
 const expresiones = {
@@ -141,12 +141,13 @@ document.querySelector('#formulario').addEventListener('submit', (e) => {
             list.appendChild(row);
             selectedRow = null;
             showAlert('Nuevo contacto agregado.', "success");
-
             localStorage.setItem('lista', tbody.innerHTML);
-            numero++;
-            contador.innerHTML = numero;
-            console.log('Aqui estoy');
-            //localStorage.setItem('contador', contador.innerHTML);
+
+            
+            console.log(tbody.children.length)
+            // numero++;
+            contador.innerHTML = tbody.children.length; 
+            // localStorage.setItem('contador', contador.innerHTML);//contador suma
 
 
         } else {
@@ -202,10 +203,13 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
         target.parentElement.parentElement.remove();
         showAlert('Contacto borrado.', 'danger');
         localStorage.setItem('lista', tbody.innerHTML);
-        numero--;
-        contador.innerHTML = numero;
-        console.log('holis');
-        //localStorage.setItem('contador', contador.innerHTML);
+        contador.innerHTML = tbody.children.length; 
+
+
+        // numero--;
+        // contador.innerHTML = numero;
+        
+        // localStorage.setItem('contador', contador.innerHTML);//contador resta 
     }
 });
 
@@ -214,7 +218,9 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
 
 (() => {
     tbody.innerHTML = localStorage.getItem('lista');
-    //contador.innerHTML = localStorage.getItem('contador');
- })()
+    contador.innerHTML = tbody.children.length; ;
+})()
 
- 
+
+// IIFE immediatelly invoked function expression
+
