@@ -1,6 +1,8 @@
 const formulario = document.getElementById('formulario');
 const inputs = document.querySelectorAll('#formulario input');
 const tbody = document.getElementById('contact-list');
+let contador = document.getElementById('cont'); 
+let numero = 0;
 
 //Expresiones regulares
 const expresiones = {
@@ -141,6 +143,11 @@ document.querySelector('#formulario').addEventListener('submit', (e) => {
             showAlert('Nuevo contacto agregado.', "success");
 
             localStorage.setItem('lista', tbody.innerHTML);
+            numero++;
+            contador.innerHTML = numero;
+            console.log('Aqui estoy');
+            //localStorage.setItem('contador', contador.innerHTML);
+
 
         } else {
             selectedRow.children[0].textContent = nombre;
@@ -168,12 +175,21 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
         document.querySelector('#apellido').value = selectedRow.children[1].textContent;
         document.querySelector('#telefono').value = selectedRow.children[2].textContent;
         
+        const campos = {
+            nombre: false,
+            apellido: false,
+            telefono: false  //NO se coloca coma (,) al ultimo elemento del objecto.
+        }
+
         inputs.forEach((input) => {
-            input.addEventListener('keyup', validarFormulario); //Ocurre un evento al presionar una tecla dentro del input ("tecla levantada").
-            input.addEventListener('blur', validarFormulario); //Ocurre un evento al presionar fuera del input.
-        
+            document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
+            campos[campo] = true;   
         }); 
 
+
+        validarCampo(expresiones.nombre, e.target, 'nombre');
+        validarCampo(expresiones.apellido, e.target, 'apellido');
+        validarCampo(expresiones.telefono, e.target, 'telefono');
 
     }
 })
@@ -186,6 +202,10 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
         target.parentElement.parentElement.remove();
         showAlert('Contacto borrado.', 'danger');
         localStorage.setItem('lista', tbody.innerHTML);
+        numero--;
+        contador.innerHTML = numero;
+        console.log('holis');
+        //localStorage.setItem('contador', contador.innerHTML);
     }
 });
 
@@ -194,4 +214,7 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
 
 (() => {
     tbody.innerHTML = localStorage.getItem('lista');
+    //contador.innerHTML = localStorage.getItem('contador');
  })()
+
+ 
