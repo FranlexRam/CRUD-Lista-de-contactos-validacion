@@ -141,12 +141,12 @@ document.querySelector('#formulario').addEventListener('submit', (e) => {
             list.appendChild(row);
             selectedRow = null;
             showAlert('Nuevo contacto agregado.', "success");
-
             localStorage.setItem('lista', tbody.innerHTML);
-            numero++;
-            contador.innerHTML = numero;
-            console.log('Aqui estoy');
-            //localStorage.setItem('contador', contador.innerHTML);
+
+            console.log(tbody.children.length)
+            // numero++;
+            contador.innerHTML = tbody.children.length; 
+            // localStorage.setItem('contador', contador.innerHTML);//contador suma
 
 
         } else {
@@ -181,15 +181,15 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
             telefono: false  //NO se coloca coma (,) al ultimo elemento del objecto.
         }
 
-        inputs.forEach((input) => {
-            document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
-            campos[campo] = true;   
-        }); 
+        // inputs.forEach((input) => {
+        //     document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
+        //     campos[campo] = true;   
+        // }); 
 
 
-        validarCampo(expresiones.nombre, e.target, 'nombre');
-        validarCampo(expresiones.apellido, e.target, 'apellido');
-        validarCampo(expresiones.telefono, e.target, 'telefono');
+        // validarCampo(expresiones.nombre, e.target, 'nombre');
+        // validarCampo(expresiones.apellido, e.target, 'apellido');
+        // validarCampo(expresiones.telefono, e.target, 'telefono');
 
     }
 })
@@ -202,10 +202,8 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
         target.parentElement.parentElement.remove();
         showAlert('Contacto borrado.', 'danger');
         localStorage.setItem('lista', tbody.innerHTML);
-        numero--;
-        contador.innerHTML = numero;
-        console.log('holis');
-        //localStorage.setItem('contador', contador.innerHTML);
+        contador.innerHTML = tbody.children.length; 
+
     }
 });
 
@@ -214,7 +212,8 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
 
 (() => {
     tbody.innerHTML = localStorage.getItem('lista');
-    //contador.innerHTML = localStorage.getItem('contador');
- })()
+    contador.innerHTML = tbody.children.length; ;
+})()
 
- 
+
+// IIFE immediatelly invoked function expression
