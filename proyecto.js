@@ -143,10 +143,6 @@ document.querySelector('#formulario').addEventListener('submit', (e) => {
             showAlert('Nuevo contacto agregado.', "success");
             localStorage.setItem('lista', tbody.innerHTML);
 
-<<<<<<< HEAD
-=======
-            
->>>>>>> 3db348b97cdc916ca62f520a46aa1954724e38ba
             console.log(tbody.children.length)
             // numero++;
             contador.innerHTML = tbody.children.length; 
@@ -208,14 +204,6 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
         localStorage.setItem('lista', tbody.innerHTML);
         contador.innerHTML = tbody.children.length; 
 
-<<<<<<< HEAD
-=======
-
-        // numero--;
-        // contador.innerHTML = numero;
-        
-        // localStorage.setItem('contador', contador.innerHTML);//contador resta 
->>>>>>> 3db348b97cdc916ca62f520a46aa1954724e38ba
     }
 });
 
@@ -226,13 +214,6 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
     tbody.innerHTML = localStorage.getItem('lista');
     contador.innerHTML = tbody.children.length; ;
 })()
-<<<<<<< HEAD
 
 
 // IIFE immediatelly invoked function expression
-=======
-
-
-// IIFE immediatelly invoked function expression
-
->>>>>>> 3db348b97cdc916ca62f520a46aa1954724e38ba
