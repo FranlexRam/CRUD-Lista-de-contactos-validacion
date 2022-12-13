@@ -212,7 +212,7 @@ document.querySelector('#contact-list').addEventListener('click', (e) => {
 
 (() => {
     tbody.innerHTML = localStorage.getItem('lista');
-    contador.innerHTML = tbody.children.length; ;
+    contador.innerHTML = tbody.children.length;
 })()
 
 
